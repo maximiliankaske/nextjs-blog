@@ -3,3 +3,21 @@
 @tailwind components;
 /* purgecss end ignore */
 @tailwind utilities;
+
+@layer base {
+  h1 {
+    @apply text-3xl font-mono;
+  }
+  h2 {
+    @apply text-xl font-mono;
+  }
+  p {
+    @apply font-mono;
+  }
+  a {
+    @apply font-mono hover:text-red-300;
+  }
+  button {
+    @apply font-mono focus:outline-none;
+  }
+}
