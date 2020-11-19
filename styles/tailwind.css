@@ -20,4 +20,10 @@
   button {
     @apply font-mono focus:outline-none;
   }
+  li {
+    @apply font-mono;
+  }
+  *::selection {
+    @apply bg-red-300;
+  }
 }
