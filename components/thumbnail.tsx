@@ -3,15 +3,29 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
-const Thumbnail = ({ id, title, image, color }: PostType) => {
+interface ThumbnailProps extends PostType {
+  width: number;
+  height: number;
+}
+
+const Thumbnail = ({
+  id,
+  title,
+  image,
+  color,
+  width,
+  height,
+}: ThumbnailProps) => {
   const style = {
     backgroundColor: color,
+    width,
+    height,
   };
   return (
     <Link key={id} href={`/posts/${id}`}>
       <motion.div
         style={style}
-        className="rounded-3xl border border-white m-2 w-52 h-36 cursor-pointer relative"
+        className="rounded-3xl border border-white cursor-pointer relative"
         whileHover={{ scale: 1.02 }}
       >
         <Image src={image} alt={title} layout="fill" />

@@ -1,6 +1,6 @@
 import { GetStaticProps } from "next";
 import Head from "next/head";
-import { Curtain, Slides } from "../components";
+import { Curtain, Slider } from "../components";
 import { getSortedPostsData } from "../lib/posts";
 
 export default function Home({ allPostsData }) {
@@ -10,9 +10,12 @@ export default function Home({ allPostsData }) {
         <title>Welcome</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="relative h-full">
+      <main className="relative h-full flex flex">
+        <div className="w-1/2" />
         <Curtain />
-        <Slides data={allPostsData} />
+        <div className="w-1/2">
+          <Slider data={allPostsData} />
+        </div>
       </main>
       <footer></footer>
     </div>
