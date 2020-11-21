@@ -8,7 +8,11 @@ const Curtain = () => {
       <div className="absolute h-full w-6/12 bg-black p-4 flex flex-col">
         <div className="flex flex-row justify-start">
           <p className="text-white">
-            <a href="http://twitter.com" target="_blank">
+            <a
+              href="http://twitter.com"
+              target="_blank"
+              className="shadow-underline"
+            >
               @mxkaske
             </a>
             .

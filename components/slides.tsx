@@ -10,14 +10,16 @@ interface SlidesProps {
 }
 
 const Slides = ({ data }: SlidesProps) => {
-  const slides = [...data, ...data];
+  const slides = [...data, ...data, ...data];
   const windowsDimensions = useWindowDimensions();
   console.log(windowsDimensions);
   return (
-    <div className="flex flex-row flex-wrap justify-end">
-      {slides?.map((slide, index) => (
-        <Thumbnail key={index} {...slide} />
-      ))}
+    <div className="flex justify-end">
+      <div className="flex">
+        {slides?.map((slide, index) => (
+          <Thumbnail key={index} {...slide} />
+        ))}
+      </div>
     </div>
   );
 };

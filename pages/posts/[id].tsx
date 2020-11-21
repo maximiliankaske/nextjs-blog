@@ -40,10 +40,12 @@ export default function Post({ postData }) {
       </div>
       <footer className="h-12 bg-black w-full">
         <div className="container mx-auto">
-          <div className="flex flex-1 flex-col">
-            <Link href="/">
-              <a className="text-white">back</a>
-            </Link>
+          <div className="flex flex-1">
+            <p>
+              <Link href="/">
+                <a className="text-white shadow-underline">back</a>
+              </Link>
+            </p>
           </div>
         </div>
       </footer>
