@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useEffect, useState, useRef } from "react";
-import { motion, useAnimation } from "framer-motion";
+import { motion, useMotionValue } from "framer-motion";
 import { PostType } from "../types";
 import Thumbnail from "./thumbnail";
 import { useElementSize, useHover, useWindowDimensions } from "../hooks";
@@ -15,46 +15,31 @@ interface SlidesProps {
 
 const Slider = ({ data }: SlidesProps) => {
   const slides = [...data, ...data];
-  const [xOffset, setXOffset] = useState(0);
-  const windowsDimensions = useWindowDimensions();
   const sliderRef = useRef(null);
-  const isHovered = useHover(sliderRef);
+  const containerRef = useRef(null);
+  const { width: containerWidth } = useElementSize(containerRef);
   const { width: sliderWidth } = useElementSize(sliderRef);
-  const controls = useAnimation();
+  const x = useMotionValue(0);
+  const freeSpace = containerWidth - sliderWidth;
 
   useEffect(() => {
-    if (windowsDimensions) {
-      const freeSpace = sliderWidth - windowsDimensions.width / 2;
-      if (freeSpace > 0) {
-        setXOffset(freeSpace);
-      }
+    function updateX() {
+      console.log(x.get());
     }
-  }, [windowsDimensions]);
+    const unsubscribeX = x.onChange(updateX);
 
-  useEffect(() => {
-    console.log(isHovered);
-    if (isHovered) {
-      controls.stop();
-    } else {
-      controls.start({
-        translateX: -xOffset,
-        transition: {
-          repeat: Infinity,
-          repeatType: "mirror",
-          duration: 3,
-        },
-      });
-    }
-  }, [isHovered]);
+    return () => unsubscribeX();
+  }, []);
 
   return (
-    <div className="flex">
+    <div ref={containerRef} className="flex">
       <div ref={sliderRef} className="flex">
         {slides?.map((slide, index) => (
           <motion.div
             key={index}
-            animate={controls}
-            onEnded={(e) => console.log(e)}
+            animate={{ x: freeSpace }}
+            style={{ x }}
+            transition={{ duration: 4 }}
           >
             <Thumbnail {...slide} width={width} height={width * aspectRatio} />
           </motion.div>
