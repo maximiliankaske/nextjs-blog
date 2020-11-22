@@ -48,7 +48,7 @@ const Thumbnail = ({
         initial="hidden"
         animate={controls}
         transition={{
-          duration: 1,
+          duration: 3,
         }}
       >
         <Image src={image} alt={title} layout="fill" />

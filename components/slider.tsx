@@ -14,7 +14,6 @@ interface SlidesProps {
 }
 
 const Slider = ({ data }: SlidesProps) => {
-  const slides = [...data, ...data];
   const sliderRef = useRef(null);
   const containerRef = useRef(null);
   const { width: containerWidth } = useElementSize(containerRef);
@@ -23,18 +22,27 @@ const Slider = ({ data }: SlidesProps) => {
   const freeSpace = containerWidth - sliderWidth;
 
   useEffect(() => {
+    window.dispatchEvent(new Event("resize"));
+  }, [data]);
+
+  useEffect(() => {
     function updateX() {
-      //console.log(x.get());
+      const delta = freeSpace + 0.001;
+      if (x.get() <= delta) {
+        //console.log("finished");
+      }
     }
     const unsubscribeX = x.onChange(updateX);
 
     return () => unsubscribeX();
-  }, []);
+  }, [sliderWidth, containerWidth]);
+
+  console.log(sliderWidth, containerWidth);
 
   return (
     <div ref={containerRef} className="flex">
       <div ref={sliderRef} className="flex">
-        {slides?.map((slide, index) => (
+        {data?.map((slide, index) => (
           <motion.div
             key={index}
             animate={{ x: freeSpace }}
