@@ -2,7 +2,7 @@ import React, { useLayoutEffect, useEffect, useState, useRef } from "react";
 import { motion, useAnimation } from "framer-motion";
 import { PostType } from "../types";
 import Thumbnail from "./thumbnail";
-import { useHover, useWindowDimensions } from "../hooks";
+import { useElementSize, useHover, useWindowDimensions } from "../hooks";
 
 // 13rem === 208px on macbook pro 13'
 
@@ -19,11 +19,12 @@ const Slider = ({ data }: SlidesProps) => {
   const windowsDimensions = useWindowDimensions();
   const sliderRef = useRef(null);
   const isHovered = useHover(sliderRef);
+  const { width: sliderWidth } = useElementSize(sliderRef);
   const controls = useAnimation();
 
   useEffect(() => {
     if (windowsDimensions) {
-      const freeSpace = slides.length * width - windowsDimensions.width / 2;
+      const freeSpace = sliderWidth - windowsDimensions.width / 2;
       if (freeSpace > 0) {
         setXOffset(freeSpace);
       }
@@ -31,26 +32,28 @@ const Slider = ({ data }: SlidesProps) => {
   }, [windowsDimensions]);
 
   useEffect(() => {
+    console.log(isHovered);
     if (isHovered) {
-      // pause animation
+      controls.stop();
     } else {
-      // continue animation
+      controls.start({
+        translateX: -xOffset,
+        transition: {
+          repeat: Infinity,
+          repeatType: "mirror",
+          duration: 3,
+        },
+      });
     }
   }, [isHovered]);
 
   return (
-    <div ref={sliderRef} className="flex">
-      <div className="flex">
+    <div className="flex">
+      <div ref={sliderRef} className="flex">
         {slides?.map((slide, index) => (
           <motion.div
             key={index}
-            initial={{ translateX: 0 }}
-            animate={{ translateX: -xOffset }}
-            transition={{
-              repeat: Infinity,
-              repeatType: "mirror",
-              duration: 3,
-            }}
+            animate={controls}
             onEnded={(e) => console.log(e)}
           >
             <Thumbnail {...slide} width={width} height={width * aspectRatio} />
