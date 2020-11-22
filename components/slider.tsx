@@ -24,7 +24,7 @@ const Slider = ({ data }: SlidesProps) => {
 
   useEffect(() => {
     function updateX() {
-      console.log(x.get());
+      //console.log(x.get());
     }
     const unsubscribeX = x.onChange(updateX);
 
