@@ -43,10 +43,10 @@ const Thumbnail = ({
         ref={ref}
         style={style}
         className="rounded-3xl border border-white cursor-pointer relative"
-        whileHover={{ scale: 1.02 }}
         variants={item}
         initial="hidden"
         animate={controls}
+        whileHover={{ scale: 1.1 }}
         transition={{
           duration: 3,
         }}

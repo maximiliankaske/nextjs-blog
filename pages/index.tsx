@@ -6,7 +6,6 @@ import { getSortedPostsData } from "../lib/posts";
 
 // add max-w-sm to Slider-parent
 export default function Home({ allPostsData }) {
-  const [data, setData] = useState([...allPostsData]);
   return (
     <div className="w-screen h-screen">
       <Head>
@@ -17,11 +16,7 @@ export default function Home({ allPostsData }) {
         <div className="w-1/2" />
         <Curtain />
         <div className="w-1/2 overflow-hidden">
-          <Slider data={data} />
-          <Button
-            onClick={() => setData((prev) => [...prev, ...allPostsData])}
-            label="add data"
-          />
+          <Slider data={allPostsData} />
         </div>
       </main>
       <footer></footer>
